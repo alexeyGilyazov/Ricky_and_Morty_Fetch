@@ -1,0 +1,64 @@
+#btn {
+    width: 150px;
+    margin: 0 auto;
+    max-width: 20vw;
+    position: absolute;
+    right: 0%;
+    bottom: -50px;
+    outline: none;
+    border: none;
+    color: #02b1c7;
+    padding: 10px 15px;
+    background: greenyellow;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: .5s all;
+    font-family: 'Barriecito', cursive;
+    font-size: 25px;
+    border: 2px solid;
+    box-shadow: 0px 0px 30px 17px #02b1c7;
+
+}
+
+#btn:active,
+#btn:hover {
+    background: rgba(241, 241, 241, 0.595);
+    box-shadow: 0px 0px 30px 17px #ffffff;
+    border-color: white;
+}
+
+
+.btn {
+    width: 150px;
+    margin: 0 auto;
+    max-width: 20vw;
+    position: absolute;
+    left: 0%;
+    bottom: -50px;
+    outline: none;
+    border: none;
+    color: #02b1c7;
+    padding: 10px 15px;
+    background: greenyellow;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: .5s all;
+    font-family: 'Barriecito', cursive;
+    font-size: 25px;
+    border: 2px solid;
+    box-shadow: 0px 0px 30px 17px #02b1c7;
+}
+
+.btn:active,
+.btn:hover {
+    background: rgba(241, 241, 241, 0.595);
+    box-shadow: 0px 0px 30px 17px #ffffff;
+    border-color: white;
+}
+
+.notActive {
+    background: rgba(0, 0, 0, 0.595);
+    box-shadow: 0px 0px 30px 17px #ffffff;
+    border-color: white;
+    cursor: not-allowed;
+}

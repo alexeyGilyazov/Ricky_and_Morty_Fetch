@@ -11,13 +11,12 @@ function showProloader() {
     }, 2500);
 }
 
-
 async function renderData(data) {
     createTable(data)
 }
 
 btn.addEventListener('click', async function () {
-    const randomNum = () => Math.round(Math.random() * 1000)
+    const randomNum = () => Math.round(Math.random() * 826)
     preloader.style.display = 'flex';
     showProloader()
     let url = `https://rickandmortyapi.com/api/character/${randomNum()}`
@@ -27,10 +26,13 @@ btn.addEventListener('click', async function () {
         .catch(error => createError(error));
 });
 
-
 inputBtn.addEventListener('click', async function () {
     const valueTarget = input.value
-
+    if (valueTarget === '') {
+        inputBtn.classList.add('notActive')
+    } else {
+        inputBtn.classList.remove('notActive')
+    }
     preloader.style.display = 'flex';
     showProloader()
     let url = `https://rickandmortyapi.com/api/character/${valueTarget}`
@@ -41,6 +43,25 @@ inputBtn.addEventListener('click', async function () {
     document.querySelector('#input').value = ''
 })
 
+
+function handler(value) {
+    preloader.style.display = 'flex';
+    showProloader()
+    let url = `https://rickandmortyapi.com/api/character/${value}`
+    fetch(url)
+        .then(response => response.json())
+        .then(data => renderData(data))
+        .catch(error => createError(error));
+}
+
+
+
+input.addEventListener('input', event => {
+    if (input.value !== '') {
+        inputBtn.classList.remove('notActive')
+        inputBtn.removeAttribute('disabled')
+    }
+})
 
 function createTable(data) {
     app.innerHTML = `<table class="iksweb">
