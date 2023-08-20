@@ -4,24 +4,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const preloader = document.getElementById("preloader");
     const input = document.getElementById("input");
     const inputBtn = document.getElementById("inputBtn");
+    const regex = /^\d+$/;
 
-    input.focus()
-
-
-    function showProloader() {
-        setTimeout(function () {
-            const preloader = document.getElementById("preloader");
-            preloader.style.display = "none";
-        }, 2500);
-    }
+    // input.focus()
 
     async function renderData(data) {
         createTable(data);
     }
 
-    const mainHanlder = (num) => {
+    function mainHanlder(num) {
         preloader.style.display = "flex";
-        showProloader();
+        setTimeout(function () {
+            const preloader = document.getElementById("preloader");
+            preloader.style.display = "none";
+        }, 2500);
 
         let url = `https://rickandmortyapi.com/api/character/${num}`;
         fetch(url)
@@ -31,19 +27,36 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     btn.addEventListener("click", async function () {
-        const randomNum = () => Math.round(Math.random() * 826);
-        mainHanlder(randomNum())
+        const randomNum = Math.round(Math.random() * 826);
+        mainHanlder(randomNum)
     });
 
     inputBtn.addEventListener("click", async function () {
         const valueTarget = input.value;
         mainHanlder(valueTarget)
         input.value = ''
+        addDisabled()
     });
 
     input.addEventListener('input', function (event) {
         const inputValue = event.target.value
+        const isValid = regex.test(inputValue)
+        if (inputValue === '' || isValid) {
+            inputBtn.classList.remove('disabled')
+            inputBtn.removeAttribute('disabled')
+            inputBtn.innerText = 'Search'
+        }
+        else {
+            addDisabled()
+        }
     })
+
+    function addDisabled() {
+        inputBtn.textContent = 'Disabled'
+        inputBtn.classList.add('disabled')
+        inputBtn.setAttribute('disabled', true)
+    }
+
 
     function createTable(data) {
         app.innerHTML = `<table class="iksweb">
