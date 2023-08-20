@@ -1,70 +1,52 @@
-const app = document.getElementById('app')
-const btn = document.getElementById('btn')
-const preloader = document.getElementById('preloader');
-const input = document.getElementById('input')
-const inputBtn = document.getElementById('inputBtn')
+document.addEventListener('DOMContentLoaded', function () {
+    const app = document.getElementById("app");
+    const btn = document.getElementById("btn");
+    const preloader = document.getElementById("preloader");
+    const input = document.getElementById("input");
+    const inputBtn = document.getElementById("inputBtn");
 
-function showProloader() {
-    setTimeout(function () {
-        const preloader = document.getElementById('preloader');
-        preloader.style.display = 'none';
-    }, 2500);
-}
+    input.focus()
 
-async function renderData(data) {
-    createTable(data)
-}
 
-btn.addEventListener('click', async function () {
-    const randomNum = () => Math.round(Math.random() * 826)
-    preloader.style.display = 'flex';
-    showProloader()
-    let url = `https://rickandmortyapi.com/api/character/${randomNum()}`
-    fetch(url)
-        .then(response => response.json())
-        .then(data => renderData(data))
-        .catch(error => createError(error));
-});
-
-inputBtn.addEventListener('click', async function () {
-    const valueTarget = input.value
-    if (valueTarget === '') {
-        inputBtn.classList.add('notActive')
-    } else {
-        inputBtn.classList.remove('notActive')
+    function showProloader() {
+        setTimeout(function () {
+            const preloader = document.getElementById("preloader");
+            preloader.style.display = "none";
+        }, 2500);
     }
-    preloader.style.display = 'flex';
-    showProloader()
-    let url = `https://rickandmortyapi.com/api/character/${valueTarget}`
-    fetch(url)
-        .then(response => response.json())
-        .then(data => renderData(data))
-        .catch(error => createError(error));
-    document.querySelector('#input').value = ''
-})
 
-
-function handler(value) {
-    preloader.style.display = 'flex';
-    showProloader()
-    let url = `https://rickandmortyapi.com/api/character/${value}`
-    fetch(url)
-        .then(response => response.json())
-        .then(data => renderData(data))
-        .catch(error => createError(error));
-}
-
-
-
-input.addEventListener('input', event => {
-    if (input.value !== '') {
-        inputBtn.classList.remove('notActive')
-        inputBtn.removeAttribute('disabled')
+    async function renderData(data) {
+        createTable(data);
     }
-})
 
-function createTable(data) {
-    app.innerHTML = `<table class="iksweb">
+    const mainHanlder = (num) => {
+        preloader.style.display = "flex";
+        showProloader();
+
+        let url = `https://rickandmortyapi.com/api/character/${num}`;
+        fetch(url)
+            .then((response) => response.json())
+            .then((data) => renderData(data))
+            .catch((error) => console.log(error));
+    }
+
+    btn.addEventListener("click", async function () {
+        const randomNum = () => Math.round(Math.random() * 826);
+        mainHanlder(randomNum())
+    });
+
+    inputBtn.addEventListener("click", async function () {
+        const valueTarget = input.value;
+        mainHanlder(valueTarget)
+        input.value = ''
+    });
+
+    input.addEventListener('input', function (event) {
+        const inputValue = event.target.value
+    })
+
+    function createTable(data) {
+        app.innerHTML = `<table class="iksweb">
 	<tbody>
 		<tr>
 			<td><img class='img-table' src='${data.image}'></td>
@@ -74,12 +56,7 @@ function createTable(data) {
 			<td><span class="title">Race hero</span><span class="desc">${data.species}</span></span></td>
 		</tr>
 	</tbody>
-</table>`
-}
+</table>`;
+    }
 
-function createError(error) {
-    app.innerHTML = ''
-    const tr = document.createElement('tr')
-    tr.innerHTML = `<td class="error">${error}</td><td class="error">No character found</td>`;
-    app.appendChild(tr);
-}
+})
