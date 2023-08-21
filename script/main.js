@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     input.addEventListener('input', function (event) {
         const inputValue = event.target.value
         const isValid = regex.test(inputValue)
-        if (inputValue === '' || isValid) {
+        if (inputValue !== '' && isValid) {
             inputBtn.classList.remove('disabled')
             inputBtn.removeAttribute('disabled')
             inputBtn.innerText = 'Search'
